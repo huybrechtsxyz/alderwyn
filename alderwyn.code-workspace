@@ -1,0 +1,114 @@
+{
+  "folders": [
+    {
+      "path": "."
+    },
+    // {
+    //   "path": "C:/Users/vince/AppData/Local/FoundryVTT/Data"
+    // }
+  ],
+  "settings": {
+    "vsicons.associations.folders": [
+      {
+        "icon": "asset",
+        "extensions": [
+          "assets",
+          ".assets",
+          "resx",
+          "resources",
+          "handouts"
+        ],
+        "format": "FileFormat.svg"
+      },
+      {
+        "icon": "blueprint",
+        "extensions": [
+          "blueprint",
+          "blueprint",
+          ".blueprint",
+          "blueprints",
+          ".blueprints",
+          "maps",
+          "scenes"
+        ],
+        "format": "FileFormat.svg"
+      },
+      {
+        "icon": "docs",
+        "extensions": [
+          "doc",
+          ".doc",
+          "docs",
+          ".docs",
+          "wiki"
+        ],
+        "format": "FileFormat.svg"
+      },
+      {
+        "icon": "images",
+        "extensions": [
+          "images",
+          "image",
+          "img",
+          "imgs",
+          "icons",
+          "icon",
+          "ico",
+          "screenshot",
+          "screenshots",
+          "svg",
+          "artwork",
+          "tiles",
+          "tokens"
+        ],
+        "format": "FileFormat.svg"
+      },
+      {
+        "icon": "module",
+        "extensions": [
+          "modules",
+          ".modules",
+          "mods",
+          ".mods"
+        ],
+        "format": "FileFormat.svg"
+      },
+      {
+        "icon": "favicon",
+        "extensions": [
+          "favicon",
+          ".favicon",
+          "favicons",
+          ".favicons"
+        ],
+        "format": "FileFormat.svg"
+      },
+      {
+        "icon": "template",
+        "extensions": [
+          "template",
+          ".template",
+          "templates",
+          ".templates",
+          "new"
+        ],
+        "format": "FileFormat.svg"
+      },
+      {
+        "icon": "www",
+        "extensions": [
+          "www",
+          ".www",
+          "wwwroot",
+          ".wwwroot",
+          "worlds",
+          ".worlds"
+        ],
+        "format": "FileFormat.svg"
+      }
+    ],
+    "editor.tabSize": 2,
+    "powershell.cwd": "atuaro",
+    "asciidoc.antora.enableAntoraSupport": false
+  }
+}
