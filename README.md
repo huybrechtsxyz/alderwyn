@@ -55,9 +55,9 @@ Alderwyn is a land of **great diversity** and **cultural crossroads**, shaped by
 ## How to Navigate Alderwyn
 
 1. **Know the Land**: The cities and towns are full of vibrant life, with their own **rules**, **customs**, and **alliances**. Understand the **political dynamics** at play, and watch out for the **tensions** between different groups.
-   
+
 2. **Trust No One Easily**: Everyone in Alderwyn has a **motive**—whether they are a wandering merchant, a noble, or even a beggar on the street. People often play their own games, and you may find yourself caught up in intrigues you didn’t intend to be a part of.
-   
+
 3. **The Gods and Their Will**: The gods play a significant role in Alderwyn. They do not interfere directly, but their **agents** (the **celestials**) are constantly moving throughout the world. Whether you believe in them or not, their influence is **undeniable**. 
 
 4. **Understand the Old Powers**: Whether through old families, ancient ruins, or the dangerous wilderness, the world still holds the **legacy** of civilizations long past. Look for these **signposts of history**, for they will lead you toward great discoveries—and great dangers.
@@ -70,4 +70,4 @@ Alderwyn is a **world of possibility**, but the choices you make will determine 
 
 The past holds its secrets, the present is full of intrigue, and the future is uncertain. What role will you play in the **epic saga** of Alderwyn? The world is waiting for you to write its next chapter.
 
-**Welcome to Alderwyn.** The adventure begins now.
+**Welcome to Alderwyn.** The adventure starts here.
