@@ -10,7 +10,7 @@ The Blood Court, a vampire cabal, rules Halgrith from the shadows. Trade dispute
 
 <!-- PLAYER -->
 ## Points of Interest
-- **Golden Market**: An endless bazaar of exotic goods and magical items. Test 4
+- **Golden Market**: An endless bazaar of exotic goods and magical items. Test 6
 - **Tower of Banners**: Where job postings and political decrees are nailed each day.
 
 <!-- END -->
