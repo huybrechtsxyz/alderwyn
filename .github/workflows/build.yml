@@ -1,0 +1,37 @@
+# Build Jobs
+name: Build Alderwyn
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'wiki/**'
+  workflow_call:
+
+jobs:
+  build-handbook:
+    name: Build Player Handbook
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      
+      - name: Install dependencies
+        run: pip install pathlib
+
+      - name: Run handbook builder
+        run: python .github/scripts/build_handbook.py
+
+      - name: Commit changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add public/handbook/
+          git commit -m "Auto-update handbook [skip ci]" || echo "No changes to commit"
+          git push
