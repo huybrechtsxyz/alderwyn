@@ -1,3 +1,5 @@
+# Halgrith, The Gilded City
+
 ## Overview
 Halgrith is a shimmering beacon of trade and artistry, its towers gilded in real gold. Caravans from across the continent gather here to sell their wares.
 
