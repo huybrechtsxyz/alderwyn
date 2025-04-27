@@ -9,7 +9,6 @@ DEST_DIR = pathlib.Path('public/handbook')
 def get_last_commit_author():
     """Get the last commit author's name using git."""
     try:
-        # Use Git to get the author's name from the last commit
         author = subprocess.check_output(
             ['git', 'log', '-1', '--pretty=%an'], 
             stderr=subprocess.PIPE
@@ -20,7 +19,7 @@ def get_last_commit_author():
         return "Anonymous"  # Fallback if git command fails
 
 def get_footer():
-    now = datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M UTC')
+    now = datetime.datetime.now(datetime.timezone.utc).strftime('%Y-%m-%d %H:%M UTC')
     author = get_last_commit_author()
     return f"\n---\nLast Updated: {now}\nAuthor: {author}\n"
 
@@ -52,6 +51,28 @@ def update_file(path, content):
     with open(path, 'w', encoding='utf-8') as f:
         f.write(updated_content)
 
+def remove_orphan_files(generated_files):
+    """Remove files in DEST_DIR that no longer exist in SOURCE_DIR."""
+    for file in DEST_DIR.rglob('*.md'):
+        relative_path = file.relative_to(DEST_DIR)
+        source_file = SOURCE_DIR / relative_path
+        if not source_file.exists():  # File has been removed from source
+            print(f"Removing orphaned file: {file}")
+            file.unlink()
+
+def handle_placeholder():
+    """Handle .placeholder creation or deletion."""
+    placeholder = DEST_DIR / '.placeholder'
+    # Check if any files were generated, if not, create the placeholder.
+    if not any(DEST_DIR.rglob('*.md')):  # No generated files
+        if not placeholder.exists():
+            placeholder.write_text('This file keeps the directory in Git.\n')
+            print(f"Created {placeholder}")
+    else:
+        if placeholder.exists():
+            placeholder.unlink()
+            print(f"Removed {placeholder}")
+
 def main():
     DEST_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -72,18 +93,11 @@ def main():
             update_file(dest_file, player_content)
             generated_files.append(dest_file)
 
+    # Remove orphaned files in DEST_DIR
+    remove_orphan_files(generated_files)
+
     # Handle .placeholder
-    placeholder = DEST_DIR / '.placeholder'
-    if generated_files:
-        # If files were generated, remove .placeholder if it exists
-        if placeholder.exists():
-            placeholder.unlink()
-            print(f"Removed {placeholder}")
-    else:
-        # If no files, make sure .placeholder exists
-        if not placeholder.exists():
-            placeholder.write_text('This file keeps the directory in Git.\n')
-            print(f"Created {placeholder}")
+    handle_placeholder()
 
 if __name__ == "__main__":
     main()
