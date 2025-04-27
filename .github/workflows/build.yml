@@ -8,6 +8,9 @@ on:
     paths:
       - 'wiki/**'
   workflow_call:
+    
+permissions:
+  contents: write
 
 jobs:
   build-handbook:
