@@ -26,7 +26,7 @@ jobs:
         run: pip install pathlib
 
       - name: Run handbook builder
-        run: python .github/scripts/build_handbook.py
+        run: python .github/scripts/build-handbook.py
 
       - name: Commit changes
         run: |
