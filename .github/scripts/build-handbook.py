@@ -2,12 +2,12 @@ import os
 import pathlib
 import datetime
 import subprocess
+import re
 
 SOURCE_DIR = pathlib.Path('wiki')
 DEST_DIR = pathlib.Path('public/handbook')
 
 def get_last_commit_author():
-    """Get the last commit author's name using git."""
     try:
         author = subprocess.check_output(
             ['git', 'log', '-1', '--pretty=%an'], 
@@ -16,7 +16,7 @@ def get_last_commit_author():
         return author
     except subprocess.CalledProcessError as e:
         print(f"Error getting last commit author: {e}")
-        return "Anonymous"  # Fallback if git command fails
+        return "Unknown"
 
 def get_footer():
     now = datetime.datetime.now(datetime.timezone.utc).strftime('%Y-%m-%d %H:%M UTC')
@@ -26,6 +26,10 @@ def get_footer():
 def clean_content(content, for_player=False):
     if not for_player:
         return content
+
+    # Remove SECRET blocks
+    content = re.sub(r'<!--\s*SECRET\s*-->.*?<!--\s*END\s*-->', '', content, flags=re.DOTALL | re.IGNORECASE)
+
     output = []
     inside_player_block = False
     has_player_content = False
@@ -41,7 +45,11 @@ def clean_content(content, for_player=False):
         if inside_player_block:
             output.append(line)
 
-    return '\n'.join(output), has_player_content
+    # If no explicit PLAYER blocks, return whole content after secret removal
+    if not has_player_content:
+        return content, False
+
+    return '\n'.join(output), True
 
 def update_file(path, content):
     lines = content.rstrip().splitlines()
@@ -51,20 +59,17 @@ def update_file(path, content):
     with open(path, 'w', encoding='utf-8') as f:
         f.write(updated_content)
 
-def remove_orphan_files(generated_files):
-    """Remove files in DEST_DIR that no longer exist in SOURCE_DIR."""
+def remove_orphan_files(valid_files):
+    """Remove files in DEST_DIR that are not among the generated valid_files."""
     for file in DEST_DIR.rglob('*.md'):
-        relative_path = file.relative_to(DEST_DIR)
-        source_file = SOURCE_DIR / relative_path
-        if not source_file.exists():  # File has been removed from source
+        if file not in valid_files:
             print(f"Removing orphaned file: {file}")
             file.unlink()
 
 def handle_placeholder():
     """Handle .placeholder creation or deletion."""
     placeholder = DEST_DIR / '.placeholder'
-    # Check if any files were generated, if not, create the placeholder.
-    if not any(DEST_DIR.rglob('*.md')):  # No generated files
+    if not any(DEST_DIR.rglob('*.md')):
         if not placeholder.exists():
             placeholder.write_text('This file keeps the directory in Git.\n')
             print(f"Created {placeholder}")
@@ -76,7 +81,7 @@ def handle_placeholder():
 def main():
     DEST_DIR.mkdir(parents=True, exist_ok=True)
 
-    generated_files = []  # <-- track what files are created
+    generated_files = []  # Keep track of what files are generated
 
     for md_file in SOURCE_DIR.rglob('*.md'):
         relative_path = md_file.relative_to(SOURCE_DIR)
@@ -93,7 +98,7 @@ def main():
             update_file(dest_file, player_content)
             generated_files.append(dest_file)
 
-    # Remove orphaned files in DEST_DIR
+    # Clean up orphan files
     remove_orphan_files(generated_files)
 
     # Handle .placeholder
